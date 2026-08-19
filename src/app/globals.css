@@ -1,0 +1,436 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Nexza Digital — Indigo & Ice
+   Frost canvas, midnight text, signal blue for action. Flat and faceted:
+   the mark is built from straight planes only, and the UI follows suit —
+   no gradients on brand elements, no drop shadows, no outlines mixed with fills.
+   ========================================================================== */
+
+@theme {
+  /* brand palette (from the brand presentation) */
+  --color-midnight: #101736; /* body text */
+  --color-indigo: #1b2a6b; /* dark backgrounds */
+  --color-indigo-deep: #0e1740; /* deepest background */
+  --color-signal: #2f49b2; /* primary action */
+  --color-periwinkle: #6e86e0; /* labels, lines */
+  /* Periwinkle is only 3.16:1 on frost, so small label TEXT on light grounds
+     uses this darker sibling instead. Periwinkle keeps the rules and facets. */
+  --color-label: #4a62c8;
+  --color-ice: #b9c6f5; /* highlight facet */
+  --color-frost: #f4f6fc; /* page background */
+  /* Field errors need a red the Indigo & Ice palette does not carry. Chosen to
+     clear 4.5:1 on the indigo-deep form card. */
+  --color-alert: #ffb4bc;
+
+  /* derived neutrals — kept as tokens so nothing hardcodes an rgba() */
+  --color-mist: #e6ebf9;
+  --color-slate: rgba(16, 23, 54, 0.66);
+  --color-slate-soft: rgba(16, 23, 54, 0.62);
+  --color-rule: rgba(16, 23, 54, 0.12);
+  --color-rule-soft: rgba(16, 23, 54, 0.07);
+  --color-rule-light: rgba(244, 246, 252, 0.18);
+
+  /* type — Saira, semi-condensed grotesque, loopless letterforms */
+  --font-display: var(--font-saira), system-ui, sans-serif;
+  --font-sans: var(--font-saira), system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+
+  /* motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --radius-card: 4px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--color-rule);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-frost);
+    color: var(--color-slate);
+    font-family: var(--font-sans);
+    /* Saira 300 is the brand body weight */
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    color: var(--color-midnight);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-frost);
+  }
+
+  :focus-visible {
+    /* --local-accent is signal on light themes and ice on dark ones, so the
+       ring stays visible on every ground. Signal on indigo is only 1.71:1. */
+    outline: 2px solid var(--local-accent, var(--color-signal));
+    outline-offset: 3px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-periwinkle) var(--color-frost);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-frost);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-periwinkle);
+    border: 3px solid var(--color-frost);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-signal);
+  }
+}
+
+/* ==========================================================================
+   Section themes
+   Each sets --local-* so .card / .eyebrow / .btn-ghost adapt without overrides.
+   ========================================================================== */
+
+@layer components {
+  .sec {
+    position: relative;
+    padding-block: clamp(4.5rem, 9vw, 7.5rem);
+    overflow: clip;
+  }
+
+  .sec-frost {
+    background: var(--color-frost);
+    --local-fg: var(--color-midnight);
+    --local-muted: var(--color-slate);
+    --local-line: var(--color-rule);
+    --local-card: #ffffff;
+    --local-accent: var(--color-signal);
+    --local-label: var(--color-label);
+  }
+
+  .sec-white {
+    background: #ffffff;
+    --local-fg: var(--color-midnight);
+    --local-muted: var(--color-slate);
+    --local-line: var(--color-rule);
+    --local-card: var(--color-frost);
+    --local-accent: var(--color-signal);
+    --local-label: var(--color-label);
+  }
+
+  .sec-indigo {
+    background: var(--color-indigo);
+    color: rgba(244, 246, 252, 0.74);
+    --local-fg: var(--color-frost);
+    --local-muted: rgba(244, 246, 252, 0.74);
+    --local-line: var(--color-rule-light);
+    --local-card: rgba(244, 246, 252, 0.06);
+    --local-accent: var(--color-ice);
+    --local-label: var(--color-ice);
+  }
+
+  .sec-midnight {
+    background: var(--color-indigo-deep);
+    color: rgba(244, 246, 252, 0.72);
+    --local-fg: var(--color-frost);
+    --local-muted: rgba(244, 246, 252, 0.72);
+    --local-line: var(--color-rule-light);
+    --local-card: rgba(244, 246, 252, 0.05);
+    --local-accent: var(--color-ice);
+    --local-label: var(--color-ice);
+  }
+
+  .sec-indigo h1,
+  .sec-indigo h2,
+  .sec-indigo h3,
+  .sec-indigo h4,
+  .sec-midnight h1,
+  .sec-midnight h2,
+  .sec-midnight h3,
+  .sec-midnight h4 {
+    color: var(--color-frost);
+  }
+
+  /* ---------------------------------------------------------------- shell */
+
+  .shell {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  /* ------------------------------------------------ faceted grid texture */
+
+  .grid-bg {
+    background-image:
+      linear-gradient(var(--color-rule-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-rule-soft) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .grid-bg-light {
+    background-image:
+      linear-gradient(rgba(244, 246, 252, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244, 246, 252, 0.06) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  /* -------------------------------------------------------------- eyebrow */
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--local-accent, var(--color-signal));
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    background: currentColor;
+  }
+
+  /* -------------------------------------------------------------- buttons */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border-radius: 2px;
+    padding: 0.95rem 1.7rem;
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      transform 0.35s var(--ease-out-expo),
+      background-color 0.3s ease,
+      color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn-primary {
+    background: var(--color-signal);
+    color: var(--color-frost);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-indigo);
+  }
+
+  .sec-indigo .btn-primary,
+  .sec-midnight .btn-primary {
+    background: var(--color-ice);
+    color: var(--color-indigo-deep);
+  }
+
+  .sec-indigo .btn-primary:hover,
+  .sec-midnight .btn-primary:hover {
+    background: #ffffff;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--local-fg, var(--color-midnight));
+    box-shadow: inset 0 0 0 1.5px var(--local-line, var(--color-rule));
+  }
+
+  .btn-ghost:hover {
+    box-shadow: inset 0 0 0 1.5px var(--local-accent, var(--color-signal));
+    color: var(--local-accent, var(--color-signal));
+  }
+
+  /* ---------------------------------------------------------------- cards */
+
+  .card {
+    position: relative;
+    border-radius: var(--radius-card);
+    background: var(--local-card, #ffffff);
+    box-shadow: inset 0 0 0 1px var(--local-line, var(--color-rule));
+    transition:
+      box-shadow 0.4s var(--ease-out-expo),
+      transform 0.4s var(--ease-out-expo),
+      background-color 0.4s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: inset 0 0 0 1.5px var(--local-accent, var(--color-signal));
+  }
+
+  /* ------------------------------------------------------------ type util */
+
+  .h-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+
+  .lede {
+    font-size: clamp(1rem, 1.6vw, 1.125rem);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--local-muted, var(--color-slate));
+  }
+
+  /* ------------------------------------------------------------- marquee */
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-x var(--marquee-duration, 32s) linear infinite;
+  }
+
+  .marquee-reverse .marquee-track {
+    animation-direction: reverse;
+  }
+
+  .marquee-host:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-x {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  /* --------------------------------------------------------- misc effects */
+
+  .hairline {
+    height: 1px;
+    width: 100%;
+    background: var(--local-line, var(--color-rule));
+  }
+
+  /* A single flat plane of the mark, used as a large background motif.
+     Straight edges only — consistent with the logo construction rules. */
+  .facet {
+    position: absolute;
+    pointer-events: none;
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  }
+
+  /* Small uppercase label text. Resolves per section theme so it always meets
+     4.5:1 — never use `text-periwinkle` for type. */
+  .label-tone {
+    color: var(--local-label, var(--color-label));
+  }
+
+  .text-stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-rule);
+  }
+
+  .text-stroke-light {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(244, 246, 252, 0.22);
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
