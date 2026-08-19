@@ -10,7 +10,7 @@ export const site = {
   strapline: "AI Automation · CRM · Software · Web",
   description:
     "Nexza Digital builds the systems that run behind the product: AI automations, custom CRMs, internal software and the websites in front of them.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://nexza.digital",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://nexza.digital",
   domain: "nexza.digital",
   locale: "en_US",
 } as const;
