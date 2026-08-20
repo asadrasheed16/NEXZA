@@ -224,6 +224,7 @@ export const team = {
   sub: "A small senior team. The people who scope your project are the people who ship it.",
   members: [
     {
+      slug: "asad-rasheed",
       initials: "AR",
       name: "Asad Rasheed",
       title: "Founder",
@@ -233,6 +234,7 @@ export const team = {
       photo: "/team/asad-rasheed.jpg",
     },
     {
+      slug: "zubair-mehmood",
       initials: "ZM",
       name: "Zubair Mehmood",
       title: "Co-Founder",

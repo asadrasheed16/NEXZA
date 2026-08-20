@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   motion,
   useReducedMotion,
@@ -11,7 +12,7 @@ import {
 } from "framer-motion";
 
 import { team } from "@/data/content";
-import { site, socials } from "@/config/site";
+import { site } from "@/config/site";
 import { EASE } from "@/lib/motion";
 import { Reveal, RevealGroup } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -126,17 +127,7 @@ const TILES = [
 
 /* -------------------------------------------------------------------- card */
 
-function MemberCard({
-  member,
-  index,
-  href,
-  network,
-}: {
-  member: Member;
-  index: number;
-  href: string;
-  network: string;
-}) {
+function MemberCard({ member, index }: { member: Member; index: number }) {
   const reduce = useReducedMotion();
   const v = reduce ? MOTION.reduced : MOTION.full;
   const tile = TILES[index % TILES.length];
@@ -243,19 +234,17 @@ function MemberCard({
           className="hairline block origin-left"
         />
 
-        <a
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Connect with ${member.name} on ${network}`}
+        <Link
+          href={`/founders/${member.slug}`}
+          aria-label={`View ${member.name}'s portfolio`}
           className="group/link mt-5 inline-flex items-center gap-2 text-[0.7rem] font-semibold tracking-[0.2em] text-signal uppercase transition-colors duration-300 hover:text-indigo"
         >
-          Connect
+          View portfolio
           <ArrowUpRight
             aria-hidden
             className="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
           />
-        </a>
+        </Link>
       </motion.div>
     </motion.li>
   );
@@ -274,7 +263,6 @@ export function Team() {
   // 48px of total travel on the section index — a drift, not a parallax
   const indexY = useTransform(scrollYProgress, [0, 1], [24, -24]);
 
-  const linkedIn = socials.find((s) => s.label === "LinkedIn") ?? socials[0];
 
   return (
     <section
@@ -327,13 +315,7 @@ export function Team() {
           className="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-5 md:mt-16 md:grid-cols-2 md:gap-6"
         >
           {team.members.map((member, i) => (
-            <MemberCard
-              key={member.role}
-              member={member}
-              index={i}
-              href={linkedIn.href}
-              network={linkedIn.label}
-            />
+            <MemberCard key={member.slug} member={member} index={i} />
           ))}
         </RevealGroup>
       </div>

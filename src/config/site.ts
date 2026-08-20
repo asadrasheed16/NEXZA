@@ -39,6 +39,9 @@ export const nav = [
   { label: "Process", href: "#process" },
   { label: "Work", href: "#work" },
   { label: "Team", href: "#team" },
+  // A route, not an in-page anchor. The navbar's section observer only tracks
+  // "#" hrefs, so this simply never lights — which is correct off-page.
+  { label: "Founders", href: "/founders" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ] as const;

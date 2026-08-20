@@ -15,7 +15,10 @@ import { EASE } from "@/lib/motion";
 
 type NavItem = (typeof navItems)[number];
 
-const SECTION_IDS = navItems.map((item) => item.href.slice(1));
+/** Only in-page anchors are tracked; route links (e.g. /founders) are skipped. */
+const SECTION_IDS = navItems
+  .filter((item) => item.href.startsWith("#"))
+  .map((item) => item.href.slice(1));
 
 /** Header turns opaque once the hero has cleared this much of the viewport. */
 const SCROLL_THRESHOLD = 40;

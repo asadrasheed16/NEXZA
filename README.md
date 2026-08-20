@@ -1,7 +1,8 @@
 # Nexza Digital — Agency Website
 
 Marketing site for Nexza Digital: AI automation, CRM, software and web.
-Single page, motion-led, fully responsive, built to the **Indigo & Ice** brand presentation.
+Motion-led and fully responsive, built to the **Indigo & Ice** brand presentation.
+A single-page homepage plus founder portfolio routes.
 
 ## Stack
 
@@ -90,20 +91,44 @@ texture, and motion that wipes and slides rather than bounces or glows.
 src/
   app/
     layout.tsx        font, metadata, JSON-LD, skip link, scroll progress, Lenis
-    page.tsx          section order — reorder the page here
+    page.tsx          homepage — section order lives here
+    founders/
+      page.tsx        /founders — index of both founders
+      [slug]/page.tsx /founders/asad-rasheed, /founders/zubair-mehmood (SSG)
     globals.css       @theme tokens + .sec/.card/.btn/.eyebrow/.facet classes
     icon.svg          favicon (the mark)
     opengraph-image.tsx   generated 1200x630 social card
     sitemap.ts robots.ts not-found.tsx
   config/site.ts      brand constants, contact, socials, nav, raw palette for JS
-  data/content.ts     ALL marketing copy, typed `as const`
+  data/content.ts     ALL homepage copy, typed `as const`
+  data/founders.ts    founder profiles + portfolios behind /founders
   lib/motion.ts       shared framer-motion variants + house easing
   components/
-    ui/               Logo/Mark, Preloader, Reveal, SplitText, SectionHeading,
-                      Marquee, CountUp, Magnetic, ScrollProgress, SmoothScroll, Icons
+    ui/               Logo/Mark, Preloader, PageHeader, Reveal, SplitText,
+                      SectionHeading, Marquee, CountUp, Magnetic, ScrollProgress,
+                      SmoothScroll, Icons
     sections/         Navbar, Hero, StackBand, Services, Process, Work, Metrics,
                       WhyUs, Team, Faq, Contact, Footer
 ```
+
+## Routes
+
+| Route | What it is |
+| --- | --- |
+| `/` | The one-page site — all sections, anchor navigation |
+| `/founders` | Index card for each founder, linking to their portfolio |
+| `/founders/[slug]` | Individual portfolio, statically generated per founder |
+
+Founder pages are driven entirely by `src/data/founders.ts` — add an entry and the
+route, the sitemap and the index card all follow. An unknown slug 404s.
+
+The homepage navbar is anchor-driven, so its links only resolve against the one-page
+layout. Sub-pages use `PageHeader` instead (logo, back to site, book a call). The `nav`
+array may mix `#anchors` and `/routes`; the navbar's section observer tracks only the
+former, so a route link simply never lights.
+
+A founder with an empty `projects` array renders `emptyNote` rather than a bare grid —
+deliberately, so a portfolio can go live before every case study is written.
 
 ## Editing content
 
@@ -175,12 +200,15 @@ handler or a form service (Resend, Formspree, etc.).
 Items marked `TODO(client)` in `src/data/content.ts` are placeholders from the hand-off
 and **must be replaced or removed**:
 
-- [ ] **Team** — Asad Rasheed (Founder) and Zubair Mehmood (Co-Founder) are live with real
-      names and roles. Two things outstanding: the one-line bios were written here and should
-      be confirmed, and Zubair has no photo yet. Drop a portrait at
-      `public/team/zubair-mehmood.jpg` (4:5, ~880×1100) and set `photo` on his entry in
-      `content.ts`; until then he renders the faceted brand tile with his initials, which is
-      a deliberate fallback rather than a gap.
+- [ ] **Team & founder pages** — Asad Rasheed (Founder) and Zubair Mehmood (Co-Founder) are
+      live with real names and roles. Outstanding: the bios and profile paragraphs in
+      `content.ts` and `founders.ts` were written here and need confirming; Zubair has no
+      photo (drop a 4:5 portrait at `public/team/zubair-mehmood.jpg`, ~880×1100, and set
+      `photo` on both his entries) and no portfolio entries yet.
+- [ ] **Asad's portfolio entries** — Nexza Digital, Daymark, Goosi Industry and Infinitek
+      Solutions are drawn from real builds, but **confirm which may be shown publicly**
+      before launch. Client work in particular may need permission, and none of the four
+      carries a live URL yet (`href: null` hides the link).
 - [ ] **Hero stats** — `40%`, `15hrs`, `2.1x` came through as draft figures. Confirm or replace.
 - [ ] **Work items** — the three case studies are representative placeholders. Swap in real
       projects, results and years.

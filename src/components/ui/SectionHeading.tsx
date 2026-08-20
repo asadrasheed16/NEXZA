@@ -14,6 +14,8 @@ export function SectionHeading({
   align = "left",
   className = "",
   highlight,
+  /** Sections are h2 by default; a route's primary heading passes "h1". */
+  as: Tag = "h2",
 }: {
   eyebrow: string;
   heading: string;
@@ -21,6 +23,7 @@ export function SectionHeading({
   align?: "left" | "center";
   className?: string;
   highlight?: readonly string[];
+  as?: "h1" | "h2";
 }) {
   const centered = align === "center";
 
@@ -34,13 +37,13 @@ export function SectionHeading({
         <span className="eyebrow">{eyebrow}</span>
       </Reveal>
 
-      <h2
+      <Tag
         className={`h-display text-[clamp(1.9rem,4.4vw,3.4rem)] ${
           centered ? "max-w-3xl" : "max-w-4xl"
         }`}
       >
         <SplitText lines={[heading]} perWord highlight={highlight} />
-      </h2>
+      </Tag>
 
       {sub && (
         <Reveal delay={0.12}>
