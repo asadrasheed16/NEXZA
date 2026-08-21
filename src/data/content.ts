@@ -244,6 +244,15 @@ export const team = {
       body: "Finds the businesses whose manual work is worth automating, and makes sure the right people hear about it.",
       photo: null,
     },
+    {
+      slug: "shahzaib",
+      initials: "S",
+      name: "Shahzaib",
+      title: "Senior Developer",
+      role: "Senior Developer",
+      body: "Building scalable applications and engineering robust solutions.",
+      photo: null,
+    },
   ],
 } as const;
 

@@ -148,6 +148,7 @@ function MemberCard({ member, index }: { member: Member; index: number }) {
             alt={`${member.name}, ${member.title} of ${site.name}`}
             fill
             sizes="(max-width: 767px) 100vw, 42vw"
+            priority
             className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
           />
         ) : (
@@ -312,7 +313,7 @@ export function Team() {
         <RevealGroup
           as="ul"
           stagger={0.12}
-          className="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-5 md:mt-16 md:grid-cols-2 md:gap-6"
+          className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-5 md:mt-16 md:grid-cols-3 md:gap-6"
         >
           {team.members.map((member, i) => (
             <MemberCard key={member.slug} member={member} index={i} />

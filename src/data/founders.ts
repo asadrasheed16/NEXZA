@@ -158,6 +158,35 @@ export const founders: readonly Founder[] = [
     emptyNote:
       "Selected work is being written up. In the meantime, ask about lead generation and positioning directly — the fastest answer is a conversation.",
   },
+  {
+    slug: "shahzaib",
+    name: "Shahzaib",
+    initials: "S",
+    title: "Senior Developer",
+    role: "Senior Developer",
+    summary: "Building scalable applications and engineering robust solutions.",
+    about: [
+      "Shahzaib is a Senior Developer focusing on building scalable software architecture and applications.",
+      "He engineers robust solutions across the stack.",
+    ],
+    focus: [
+      "Software architecture",
+      "Full-stack development",
+      "Scalable applications",
+    ],
+    skills: [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+    ],
+    photo: null,
+    links: [
+      { label: "Email", href: "mailto:hello@nexza.digital" },
+    ],
+    projects: [],
+    emptyNote: "Selected work is being written up.",
+  },
 ];
 
 export function getFounder(slug: string): Founder | undefined {
